@@ -17,9 +17,18 @@ import TheWelcome from './components/TheWelcome.vue'
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+$red: red;
+$blue: blue;
+@mixin getColor{
+  color: $blue;
+  background-color: $red;
+}
 header {
   line-height: 1.5;
+  background-color: $red;
+  color: blue;
+  @include getColor();
 }
 
 .logo {
