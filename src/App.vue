@@ -1,56 +1,19 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam laudantium ab, dignissimos quos molestias nam pariatur itaque quae quasi, dolorum amet magnam obcaecati repudiandae explicabo aliquam culpa, quo sint tempora earum magni sequi eos. Quis voluptatibus tempore vitae praesentium aliquam. Molestiae minus dolor reprehenderit quasi. Iusto reiciendis excepturi distinctio ad!</p>
 </template>
 
 <style scoped lang="scss">
-$red: red;
-$blue: blue;
-@mixin getColor{
-  color: $blue;
-  background-color: $red;
-}
-header {
-  line-height: 1.5;
-  background-color: $red;
-  color: blue;
-  @include getColor();
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+@use 'sass:map';
+@use '@/assets/sass/fonts.scss' as font;
+@use '@/assets/sass/colors.scss' as color;
+@use '@/assets/sass/reset.scss' as *;
+p{
+  font-size: font.$primary-font-size;
+  color: color.$primary-green-400;
+  background-color: color.$neutral-green-900;
+  font-weight: map.get(font.$font-weights , "bold");
 }
 </style>
