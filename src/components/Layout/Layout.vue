@@ -3,6 +3,8 @@ import { ref,onMounted,onUnmounted } from 'vue';
 import SiteHeader from './Header/SiteHeader.vue';
 import HeaderImageMobile from '../icons/bg-header-mobile.svg';
 import HeaderImageDesktop from '../icons/bg-header-desktop.svg';
+import JobBoardMain from './job-board/JobBoardMain.vue';
+
 
 const isMobile = ref(false)
 const handleResize = () => {
@@ -24,4 +26,5 @@ onUnmounted(() => {
       <img v-else :src="HeaderImages[1]" alt="Header image at desktop" class="header-image" loading="lazy"/>
     </template>
   </SiteHeader>
+  <JobBoardMain/>
 </template>
