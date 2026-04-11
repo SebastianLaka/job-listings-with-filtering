@@ -20,7 +20,7 @@ onUnmounted(() => {
 <template>
   <SiteHeader>
     <template #site-header>
-      <img :src="isMobile ? HeaderImages[0] : HeaderImages[1]" alt="" class="header-image" />
+      <img :src="isMobile ? HeaderImages[0] : HeaderImages[1]" alt="Header image" class="header-image" />
     </template>
   </SiteHeader>
 </template>
