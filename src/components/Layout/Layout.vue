@@ -20,7 +20,8 @@ onUnmounted(() => {
 <template>
   <SiteHeader>
     <template #site-header>
-      <img :src="isMobile ? HeaderImages[0] : HeaderImages[1]" alt="Header image" class="header-image" />
+      <img v-if="isMobile" :src="HeaderImages[0]" alt="Header image at mobile" class="header-image" loading="lazy"/>
+      <img v-else :src="HeaderImages[1]" alt="Header image at desktop" class="header-image" loading="lazy"/>
     </template>
   </SiteHeader>
 </template>
