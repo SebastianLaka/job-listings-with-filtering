@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import JobBoardCart from './JobBoardCart.vue'
+import JobBoardModal from './JobBoardModal.vue'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
 console.log(jobs.data)
@@ -50,6 +51,11 @@ const getImageUrl = (path: String) => {
         </div>
       </template>
     </JobBoardCart>
+    <JobBoardModal>
+      <template #board-modal>
+        <p>hello</p>
+      </template>
+    </JobBoardModal>
   </main>
 </template>
 <style lang="scss" scoped>
@@ -62,7 +68,7 @@ const getImageUrl = (path: String) => {
   .jobs-board-container {
     @include mixin.flex-layout($flex-direction: column);
     @include mixin.set-gap(5em 0);
-    margin: 3em 1em;
+    padding: 10em 1em 3em 1em;
     .company-data {
       .jobs-logos {
         @include mixin.set-position-element($position: absolute, $top: -1.75em, $left: 1em);

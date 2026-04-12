@@ -11,7 +11,17 @@ defineSlots<{
 <style lang="scss" scoped>
 @use 'sass:map';
 @use '@/assets/sass/colors.scss' as color;
-.site-header{
+@use '@/assets/sass/breakpoints.scss' as breakpoint;
+@media (min-width: breakpoint.$mobile-view) {
+  .site-header {
     background-color: color.$primary-green-400;
+    height: 30vh;
+  }
+}
+
+@media (min-width: breakpoint.$desktop-small) {
+  .site-header {
+    height: 19.5vh;
+  }
 }
 </style>
