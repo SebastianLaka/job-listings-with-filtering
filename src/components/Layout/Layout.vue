@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref,onMounted,onUnmounted } from 'vue';
 import SiteHeader from './Header/SiteHeader.vue';
-import HeaderImageMobile from '../icons/bg-header-mobile.svg';
-import HeaderImageDesktop from '../icons/bg-header-desktop.svg';
+import HeaderImageMobile from '../images/bg-header-mobile.svg';
+import HeaderImageDesktop from '../images/bg-header-desktop.svg';
 import JobBoardMain from './job-board/JobBoardMain.vue';
-
-
 const isMobile = ref(false)
 const handleResize = () => {
   isMobile.value = window.innerWidth <= 992

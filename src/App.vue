@@ -15,4 +15,5 @@ import Layout from './components/Layout/Layout.vue';
 //   background-color: color.$neutral-green-900;
 //   font-weight: map.get(font.$font-weights , "bold");
 // }
+
 </style>

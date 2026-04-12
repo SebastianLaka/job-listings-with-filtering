@@ -3,10 +3,19 @@ import JobBoardCart from './JobBoardCart.vue'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
 console.log(jobs.data)
+const getImageUrl = (path: String) => {
+  const cleanPath = path.replace('./', '../../')
+  return new URL(cleanPath, import.meta.url).href
+}
 </script>
 <template>
   <main class="jobs-board-container">
     <JobBoardCart v-for="job in jobs.data" :key="job.id">
+      <template #company-logo>
+        <div class="jobs-logos">
+          <img :src="getImageUrl(job.logo)" alt="" class="jobs-logos__logo">
+        </div>
+      </template>
       <template #job-info>
         <div class="job-info">
           <p class="job-info__company-name">{{ job.company }}</p>
@@ -50,15 +59,29 @@ console.log(jobs.data)
 @use '@/assets/sass/breakpoints.scss' as breakpoint;
 @media (min-width: breakpoint.$mobile-view) {
   .jobs-board-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5em 0;
+    margin: 3em 1em;
+    .jobs-logos{
+      position: absolute;
+      top: -1.75em;
+      left: 1em;
+      &__logo{
+        width: 60%;height: 60%;
+      }
+    }
     .job-info {
       display: flex;
       align-items: center;
       gap: 0 1em;
-      padding: 1em 0;
       &__company-name {
         padding-right: 1em;
+        margin-top: .5em;
         color: color.$primary-green-400;
         font-weight: map.get(font.$font-weights, 'bold');
+        line-height: 1;
+        height: .75rem;
       }
       &__new,
       &__featured {
@@ -77,7 +100,7 @@ console.log(jobs.data)
     .job-details {
       display: flex;
       flex-direction: column;
-      gap: 0.5em 0;
+      gap: 1em 0;
       &__position {
         font-weight: map.get(font.$font-weights, 'bold');
       }
@@ -108,6 +131,8 @@ console.log(jobs.data)
     .job-board-requirements {
       display: flex;
       gap: 0 1em;
+      padding: 1em 0;
+      border-top: .1em solid color.$neutral-gray-400;
       &__role,
       &__level {
         color: color.$primary-green-400;
