@@ -3,7 +3,7 @@ import JobBoardCart from './JobBoardCart.vue'
 import JobBoardModal from './JobBoardModal.vue'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
-console.log(jobs.data)
+console.log(jobs.data[8]?.languages)
 const getImageUrl = (path: String) => {
   const cleanPath = path.replace('./', '../../')
   return new URL(cleanPath, import.meta.url).href
