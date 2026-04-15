@@ -1,7 +1,6 @@
-<script setup lang="ts"></script>
 <template>
   <div class="job-board-modal">
-    <slot name="board-modal"></slot>
+    <slot name="board-modal" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -10,7 +9,7 @@
 @use '@/assets/sass/breakpoints.scss' as breakpoint;
 @media (min-width: breakpoint.$mobile-view) {
   .job-board-modal {
-    @include mixin.flex-layout($flex-wrap: wrap);
+    @include mixin.flex-layout($justify-content: space-between, $flex-wrap: wrap);
     @include mixin.set-position-element($position: absolute, $top: 15.5em, $left: 2.35%);
     background-color: color.$neutral-green-50;
     width: 95%;

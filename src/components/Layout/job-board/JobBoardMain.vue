@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import JobBoardCart from './JobBoardCart.vue'
 import JobBoardModal from './JobBoardModal.vue'
+import closeIcon from '@/components/images/icon-remove.svg'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
+
 console.log(jobs.data[8]?.languages)
 const getImageUrl = (path: String) => {
   const cleanPath = path.replace('./', '../../')
@@ -38,24 +40,31 @@ const getImageUrl = (path: String) => {
           </div>
         </div>
         <div class="job-board-requirements">
-          <button class="job-board-requirements__role">{{ job.role }}</button>
-          <button class="job-board-requirements__level">{{ job.level }}</button>
           <ul class="requirements-list">
-            <li v-for="language in job.languages" :key="language">
-              <button class="requirements-list__language">{{ language }}</button>
-            </li>
-            <li v-for="tool in job.tools" :key="tool">
-              <button class="requirements-list__tool">{{ tool }}</button>
+            <li v-for="tag in jobs.getJobTags(job)" :key="tag">
+              <button class="requirements-list__tag" @click="jobs.addFilter(tag)">
+                {{ tag }}
+              </button>
             </li>
           </ul>
         </div>
       </template>
     </JobBoardCart>
-    <JobBoardModal>
-      <template #board-modal>
-        <p>hello</p>
-      </template>
-    </JobBoardModal>
+    <Transition mode="out-in" name="v-job">
+      <JobBoardModal v-if="jobs.jobFilters.length > 0">
+        <template #board-modal>
+          <TransitionGroup tag="ul" name="tag-list" class="board-tag">
+            <li class="board-tag__tag" v-for="tag in jobs.jobFilters" :key="tag">
+              {{ tag }}
+              <button class="board-tag__remove-button" @click="jobs.removeTag(tag)">
+                <img :src="closeIcon" alt="remove filter tag icon" />
+              </button>
+            </li>
+          </TransitionGroup>
+          <button class="clear-button" @click="jobs.clearFilters()">Clear</button>
+        </template>
+      </JobBoardModal>
+    </Transition>
   </main>
 </template>
 <style lang="scss" scoped>
@@ -150,29 +159,12 @@ const getImageUrl = (path: String) => {
       @include mixin.set-gap(0, 1em);
       padding: 1em 0;
       border-top: 0.1em solid color.$neutral-gray-400;
-      &__role,
-      &__level {
-        padding: 0.5em 0.75em;
-        line-height: 1;
-        height: 1.5rem;
-        @include mixin.set-typography(
-          $color: color.$primary-green-400,
-          $font-weight: map.get(font.$font-weights, 'bold')
-        );
-        transition:
-          background-color 0.3s ease-in-out,
-          color 0.3s ease-in-out;
-        &:hover {
-          background-color: color.$primary-green-400;
-          @include mixin.set-typography($color: color.$neutral-green-50);
-        }
-      }
+
       .requirements-list {
         @include mixin.flex-layout();
         @include mixin.set-gap(0, 1em);
         list-style-type: none;
-        &__language,
-        &__tool {
+        &__tag {
           padding: 0.5em 0.75em;
           line-height: 1;
           height: 1.5rem;
@@ -192,6 +184,64 @@ const getImageUrl = (path: String) => {
     }
     .featured {
       border-left: 0.4em solid color.$primary-green-400;
+    }
+
+    .board-tag {
+      @include mixin.flex-layout($flex-wrap: wrap);
+      width: 90%;
+      &__tag {
+        padding: 0.5em;
+        list-style-type: none;
+        @include mixin.set-typography(
+          $color: color.$primary-green-400,
+          $font-weight: map.get(font.$font-weights, 'medium')
+        );
+      }
+      &__remove-button {
+        background-color: color.$primary-green-400;
+        padding: 0.5em;
+        border-top-right-radius: 0.4em;
+        border-bottom-right-radius: 0.4em;
+        transition: background-color 0.3s ease-in-out;
+        &:hover {
+          background-color: color.$neutral-green-900;
+        }
+      }
+    }
+    .clear-button {
+      @include mixin.set-typography(
+        $color: color.$primary-green-400,
+        $font-weight: map.get(font.$font-weights, 'medium')
+      );
+      font-size: 1rem;
+      padding: 1em;
+    }
+    .v-job-enter-active,
+    .v-job-leave-active {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .v-job-enter-from,
+    .v-job-leave-to {
+      opacity: 0;
+    }
+
+    .v-job-enter-to,
+    .v-job-leave-from {
+      opacity: 1;
+    }
+    .tag-list-enter-active,
+    .tag-list-leave-active {
+      transition: all 0.3s ease;
+    }
+    .tag-list-enter-from,
+    .tag-list-leave-to {
+      opacity: 0;
+      transform: scale(0.1);
+    }
+    .tag-list-move {
+      transition: transform 0.3s ease;
+       opacity: 1;
     }
   }
 }

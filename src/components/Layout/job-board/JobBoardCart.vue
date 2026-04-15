@@ -1,7 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 <template>
   <article class="job-card">
-    <slot name="job-info"/>
+    <slot name="job-info" />
+  
   </article>
 </template>
 <style lang="scss" scoped>
