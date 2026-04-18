@@ -1,6 +1,3 @@
-<script setup lang="ts">
-
-</script>
 <template>
   <article class="job-card">
     <slot name="job-info" />

@@ -6,18 +6,26 @@ import DataJson from '@/assets/data.json'
 export const useJobsStore = defineStore('job', () => {
   const data = ref<JobData[]>(DataJson)
   const jobFilters = ref<string[]>([])
+  const jobsList = ref<JobData[]>(DataJson)
   const getJobTags = (job: JobData): string[] => {
     return [job.role, job.level, ...job.languages, ...job.tools]
   }
   const addFilter = (filter: string) => {
-    const filterExist = jobFilters.value.includes(filter)
-    if (!filterExist) {
-      jobFilters.value.push(filter)
+    if (!jobFilters.value.includes(filter)) {
+      jobFilters.value = [...jobFilters.value, filter]
     }
   }
   const removeTag = (filter: string) => {
-   jobFilters.value = jobFilters.value.filter(tag => tag !== filter)
+    jobFilters.value = jobFilters.value.filter((tag) => tag !== filter)
   }
   const clearFilters = () => (jobFilters.value = [])
-  return { data, jobFilters, addFilter, getJobTags, clearFilters, removeTag }
+  const filteredJobList = computed(() =>
+    jobsList.value.filter((job) => {
+      const filteredJobTags = getJobTags(job)
+      let getJobfilters = jobFilters.value
+      return getJobfilters.every((jobFilter) => filteredJobTags.includes(jobFilter))
+    }),
+  )
+
+  return { data, jobFilters, addFilter, getJobTags, clearFilters, removeTag, filteredJobList }
 })

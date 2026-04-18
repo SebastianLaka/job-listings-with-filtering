@@ -4,8 +4,6 @@ import JobBoardModal from './JobBoardModal.vue'
 import closeIcon from '@/components/images/icon-remove.svg'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
-
-console.log(jobs.data[8]?.languages)
 const getImageUrl = (path: String) => {
   const cleanPath = path.replace('./', '../../')
   return new URL(cleanPath, import.meta.url).href
@@ -13,7 +11,7 @@ const getImageUrl = (path: String) => {
 </script>
 <template>
   <main class="jobs-board-container">
-    <JobBoardCart v-for="job in jobs.data" :key="job.id" :class="{ featured: job.featured }">
+    <JobBoardCart v-for="job in jobs.filteredJobList" :key="job.id" :class="{ featured: job.featured }">
       <template #job-info>
         <div class="company-data">
           <div class="jobs-logos">
@@ -77,6 +75,7 @@ const getImageUrl = (path: String) => {
   .jobs-board-container {
     @include mixin.flex-layout($flex-direction: column);
     @include mixin.set-gap(5em 0);
+    border-left-color: color.$neutral-green-50;
     padding: 10em 1em 3em 1em;
     .company-data {
       .jobs-logos {
@@ -215,6 +214,9 @@ const getImageUrl = (path: String) => {
       );
       font-size: 1rem;
       padding: 1em;
+      &:hover{
+        text-decoration: underline;
+      }
     }
     .v-job-enter-active,
     .v-job-leave-active {
