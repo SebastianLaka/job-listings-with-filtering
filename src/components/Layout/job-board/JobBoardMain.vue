@@ -4,7 +4,7 @@ import JobBoardModal from './JobBoardModal.vue'
 import closeIcon from '@/components/images/icon-remove.svg'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
-const images = import.meta.glob('../../images/*.{png,svg}', { 
+const images = import.meta.glob('../../images/*.svg', { 
   eager: true, 
   import: 'default' 
 });
