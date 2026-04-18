@@ -4,19 +4,16 @@ import JobBoardModal from './JobBoardModal.vue'
 import closeIcon from '@/components/images/icon-remove.svg'
 import { useJobsStore } from '@/stores/jobs'
 const jobs = useJobsStore()
+const images = import.meta.glob('../../images/*.svg', { 
+  eager: true, 
+  import: 'default' 
+});
 const getImageUrl = (path: string) => {
-  const cleanPath = path.replace('./', '../../')
-  
-  return new URL(cleanPath, import.meta.url).href
+  const filename = path.split('/').pop();
+  if (!filename) return '';
+  const imagePath = Object.keys(images).find(key => key.endsWith(filename));
+  return imagePath ? (images[imagePath] as string) : '';
 }
-// const getImageUrl = (path: string) => {
-//   // path to np. "./images/photosnap.svg"
-//   // wyciągamy samą nazwę pliku: "photosnap.svg"
-//   const fileName = path.split('/').pop(); 
-  
-//   // Wychodzimy z layout/ do components/ i wchodzimy do images/
-//   return new URL(`../images/${fileName}`, import.meta.url).href;
-// }
 </script>
 <template>
   <main class="jobs-board-container">
